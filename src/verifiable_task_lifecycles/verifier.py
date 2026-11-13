@@ -120,3 +120,12 @@ def verify_external_run(run: dict[str, Any]) -> VerificationReport:
         report.issues.append("top-level Evidence identifier mismatch")
     report.verified = not report.issues
     return report
+
+
+# New ledger-anchored verification path (Step 3).  The legacy bundle checker
+# above is retained unchanged for archived experiment reproduction; callers
+# must explicitly use verify_committed_task for independent admission replay.
+from .committed_verifier import (  # noqa: E402
+    RecordedTaskVerificationReport,
+    verify_committed_task,
+)
