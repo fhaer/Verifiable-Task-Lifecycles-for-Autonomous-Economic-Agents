@@ -1,0 +1,1 @@
+{"operation":"purchase_service","parameters":{"endpoint":"https://example.invalid/reputation-alt"},"provider":"controlled-test","service":"reputation-alt","value":2}

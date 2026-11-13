@@ -1,43 +1,55 @@
 # Verifiable Task Lifecycles for Autonomous Economic Agents Using Distributed Ledgers
 
-Prototype and experiment material for the paper *Verifiable Task Lifecycles for Autonomous Economic Agents Using Distributed Ledgers*.
+Reference implementation and reproducibility material for the paper *Verifiable Task Lifecycles for Autonomous Economic Agents Using Distributed Ledgers*.
 
-The prototype represents a delegated economic task as one persistent lifecycle. Each accepted transition links **Intent**, **Action**, **Payment**, and **Evidence**. Complete objects remain off-chain. Content commitments, task state, and transition order are recorded on a distributed ledger and can later be checked against the exported artifacts.
+A delegated economic task is represented as a persistent lifecycle. The controller admits runtime-selected paid actions against task constraints, and each recorded transition binds **Action**, **Payment**, and **Evidence** to a committed **Intent**. Complete objects are stored off-chain; their content commitments, order, and lifecycle state are recorded on a distributed ledger.
 
-The prototype is implemented in Python 3.13 with the OpenAI Responses API, x402 v2, web3.py, and a Solidity `LifecycleTracker` contract. The paper uses Base Sepolia.
+An independent verifier reconstructs the recorded history and checks **structural consistency** and **admission replay** against the committed policy and preceding recorded outcomes. A separate payment audit can validate selected x402 terms before signing and verify observed ERC-20 transfer properties. These are distinct checks: an admissible *recorded* history does not establish the authenticity or completeness of external execution.
 
-Public deployment:
+## Quick start
 
-- Network: Base Sepolia (`eip155:84532`)
-- Lifecycle contract: `0xE27e67da9D39aF51D778648E50EE2182C5B2D680`
-- Controller/payer: `0xF482471FE90aC83376554054c039F188CB6CFA87`
-- Payment protocol: x402 v2 `exact`
-
-No private key or model-provider credential is included.
-
-## Installation and Usage
-
-### 1. Project Setup
-
-Python 3.13 or later is recommended.
+Requires **Python 3.13+**. The deterministic test suite needs no wallet, RPC, paid service, or optional live dependencies.
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install -e .
+PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
-The deterministic tests use only the Python standard library.
-
-### 2. Deterministic Checks
+**Expected:** 149 tests pass. To install RPC, x402, and provider dependencies for optional live checks:
 
 ```bash
-python -m unittest discover -s tests -v
+python -m pip install -e '.[live]'
 ```
 
-The 12 tests cover the six paper cases and additional binding, freshness, and terminal-state checks.
+Do not supply private keys for read-only verification. See [Reproducibility](docs/REPRODUCIBILITY.md) for the complete command reference and safe live-test instructions.
 
-### 3. Archived Experiment Results
+## Results and evidence
+
+| Experiment | Preserved material | What it establishes |
+|---|---|---|
+| RQ1: Controlled admission and integrity cases | `experiments/controlled_cases/`, `tests/test_lifecycle.py` | T1–T6 and additional deterministic checks |
+| RQ2: Historical independent verification | `experiments/independent_verification/result.json` | Archived two-transition structural/receipt verification; original bundle not retained |
+| RQ2: On-chain adversarial admission replay | `experiments/admission_replay/` | Two Base Sepolia transitions are structurally consistent; replay rejects the second as policy-inadmissible. Payments **simulated** |
+| RQ3: Ledger overhead | `experiments/live_base_sepolia/results/` | Five controlled runs, eight paid transitions, 18 lifecycle transactions |
+| Historical external-provider interoperability | `experiments/external_interop/` | Archived independently operated service interaction and artifact check |
+| Standalone live x402 payment validation | `experiments/live_x402/first_payment.json` | Exact challenge matched; a local price-mismatch control was rejected before signing; an independent ERC-20 transfer check passed |
+
+The adversarial history and the live x402 transfer are **separate experiments**. The live payment was **not** committed as a settlement of the adversarial task.
+
+### Published Base Sepolia deployment
+
+- Chain: Base Sepolia (`eip155:84532`)
+- Lifecycle contract: `0xE27e67da9D39aF51D778648E50EE2182C5B2D680`
+- Adversarial task instance: `0x55ddb20339902e675e2a1258d80b995192aa04c4047bcf90ede62483e9d1813f`
+- Adversarial task creation: `0x2e382c00af0d884cf815587c9a91989101e54cbf4fa08663e7163bf89278ed35`
+- Recorded transitions: `0xcf5ebed468a2c15b9d22f1cb65216cb16aa06d4609db919227e5d877c03790d5` and `0x8410ae1c60cc6a876810673b2324099cbef032033a8c5e7dbc5570c8d76146be`
+- Independently checked x402 settlement (separate experiment): `0x2024b3394feec473355f55a08ed318a20b107a8387216e9d42b3a749508f575c`
+
+**Contract compatibility:** the reference Solidity source and the archived deployed contract have *different ABIs*. The Python reader/recorder selects the pinned deployed interface after checking its runtime bytecode hash. Do not assume `contracts/src/LifecycleTracker.sol` reproduces the deployed bytecode. See [Provenance](docs/PROVENANCE.md) and [contracts](contracts/README.md).
+
+## Reproduce archived evaluations (offline)
 
 ```bash
 python scripts/validate_results.py
@@ -45,59 +57,42 @@ python scripts/summarize_live_runs.py
 python scripts/verify_external_artifacts.py
 ```
 
-These commands use the archived experiment records. They reproduce the five controlled Base Sepolia runs, 8 paid transitions, 18 lifecycle transactions, and the external-provider artifact commitments.
+The first script verifies the archived five-run summary. The external-provider command validates historical artifact commitments and bindings; its `verified=true` output does **not** imply current policy replay or a decoded ERC-20 transfer audit.
 
-### 4. Receipt Checks
+## Verify the adversarial task (read-only Base Sepolia RPC)
 
-With `web3` installed and an RPC endpoint:
-
-```bash
-python scripts/verify_settlement_receipts.py --rpc-url https://sepolia.base.org
-```
-
-This checks transaction existence and successful receipt status. Transfer logs are not decoded.
-
-### 5. Live Experiments
-
-Copy `.env.example` to `.env` and add local credentials. Start the controlled provider, for example:
+With optional live dependencies installed:
 
 ```bash
-uvicorn services.controlled_provider:app --port 4021
+PYTHONPATH=src python scripts/verify_committed_task.py \
+  --rpc-url https://sepolia.base.org \
+  --contract 0xE27e67da9D39aF51D778648E50EE2182C5B2D680 \
+  --instance-id 0x55ddb20339902e675e2a1258d80b995192aa04c4047bcf90ede62483e9d1813f \
+  --store experiments/admission_replay/artifacts
 ```
 
-A new live run produces new testnet observations. It does not reproduce historical confirmation times.
+Expected: `structural_consistency=pass`, `admission_replay=fail`, `denied_transition=1`, `settlement_check=unverified`. **Exit code 1 is expected:** the recorded second transition intentionally violates admission policy.
 
-## Project Structure
+## Test x402 terms without paying
+
+```bash
+PYTHONPATH=src python scripts/run_live_x402.py \
+  --config examples/live_sanctions_testnet.json
+```
+
+The default mode performs an unauthenticated 402 challenge preflight and a local price-mismatch negative control, **without signing or paying**. An explicitly acknowledged paid run is optional and must use a fresh journal; see the [live-payment instructions](docs/REPRODUCIBILITY.md#standalone-x402-payment-test).
+
+## Layout
 
 ```text
-verifiable-task-lifecycles
-│
-├── contracts/                  Solidity lifecycle contract and tests
-├── docs/                       model, architecture, reproduction
-├── experiments/
-│   ├── controlled_cases/       deterministic lifecycle cases
-│   ├── live_base_sepolia/      five controlled end-to-end runs
-│   ├── independent_verification/
-│   └── external_interop/       separate external-provider run
-├── scripts/                    validation and reproduction scripts
-├── services/                   deterministic controlled provider
-├── src/verifiable_task_lifecycles/
-└── tests/                      deterministic tests
+contracts/                  Reference Solidity contract and Foundry tests
+docs/                       Reproducibility, formal model, provenance, trust boundaries
+examples/                   Example Intent/catalog and pinned live-service configuration
+experiments/                Archived results and content-addressed evidence
+scripts/                    Verification, experiment, and optional diagnostic CLIs
+services/                   Controlled service implementation
+src/verifiable_task_lifecycles/    Python implementation
+tests/                      149 deterministic unit tests
 ```
 
-## Evaluation Material
-
-- **RQ1:** `experiments/controlled_cases/` and `tests/`
-- **RQ2:** `experiments/independent_verification/`
-- **RQ3:** `experiments/live_base_sepolia/`
-- **Interoperability:** `experiments/external_interop/`
-
-The external-provider run is separate from the five-run performance sample.
-
-## Source Provenance
-
-The archived experiment files are preserved as recorded. The Python and Solidity source in this repository are provided as a reference implementation aligned with the final paper and archived artifact schema.
-
-## Citation
-
-Anonymized
+For a paper-claim-to-evidence index, see [Claim-to-artifact map](docs/CLAIM_ARTIFACT_MAP.md). Archived reports are preserved as evidence; new runs should use separate output paths and must not overwrite them. No wallet credentials are included in this repository.

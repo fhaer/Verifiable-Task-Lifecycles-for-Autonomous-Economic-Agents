@@ -1,0 +1,60 @@
+{
+  "actual_payments": "one-matching-erc20-transfer-observed",
+  "challenge": {
+    "exact_match": true,
+    "matching_offers": 1,
+    "observed_quote_price_mismatch_control": "rejected-without-signing",
+    "rejected_offer_count": 0,
+    "server_quote_is_not_trusted_catalog": true,
+    "total_offers": 1,
+    "x402_version": 2
+  },
+  "created_utc": "2026-11-13T16:54:17.447095+00:00",
+  "independent_erc20_transfer_check": {
+    "block_number": 58334968,
+    "observed_amount": 10000,
+    "reason": "one matching ERC-20 Transfer emitted by trusted asset contract",
+    "reference": "0x2024b3394feec473355f55a08ed318a20b107a8387216e9d42b3a749508f575c",
+    "status": "pass"
+  },
+  "journal_warning": "Sensitive wallet secrets and payment signatures are not archived",
+  "mode": "one-shot-onchain-settlement",
+  "negative_control": {
+    "name": "price_plus_one_atomic_unit",
+    "payment_attempted": false,
+    "reason": "payment amount differs from trusted catalog",
+    "result": "rejected",
+    "signed": false
+  },
+  "paid_request_attempts": 1,
+  "provider_response_sha256": "0x7460f7f39d0655552f98ab132ef55f6e4863aff08f6deb25a53e882b2da82785",
+  "reported_payer": "0xF482471FE90aC83376554054c039F188CB6CFA87",
+  "retry_policy": "never automatic; reconcile first",
+  "schema": "live-x402-transfer-experiment/v1",
+  "sdk_version": "2.22.0",
+  "service_response": "success",
+  "session_id": "0e633360-7df5-4a4f-8070-6616b20e2824",
+  "settlement_reported_network": "eip155:84532",
+  "settlement_tx": "0x2024b3394feec473355f55a08ed318a20b107a8387216e9d42b3a749508f575c",
+  "status": "settlement-audit-pass",
+  "trusted_catalog": {
+    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "atomic_units_per_budget_unit": 10000,
+    "catalog_source": "https://x402.new/services/tollbooth-sanctions-screener-testnet-sjwilliams8-workers-dev-screen",
+    "catalog_value": 1,
+    "endpoint": "https://tollbooth-sanctions-screener-testnet.sjwilliams8.workers.dev/screen",
+    "expected_atomic_amount": 10000,
+    "method": "POST",
+    "network": "eip155:84532",
+    "pay_to": "0xb3e7993ed2fc2c79fff220620240f298bba9bf5b",
+    "provider": "external-sanctions-screener",
+    "service": "sanctions-screen"
+  },
+  "updated_utc": "2026-11-13T16:54:22.826143+00:00",
+  "wallet_check": {
+    "chain_id": 84532,
+    "payer": "0xF482471FE90aC83376554054c039F188CB6CFA87",
+    "token_decimals": 6,
+    "usdc_balance_atomic_before": 1750000
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "intent": {
+    "goal": "Assess blockchain entity X using paid analysis when necessary",
+    "budget": 10,
+    "allowed_services": ["history", "reputation"],
+    "allowed_providers": ["controlled"]
+  },
+  "catalog": [
+    {
+      "service": "history",
+      "provider": "controlled",
+      "value": 1,
+      "endpoint": "http://127.0.0.1:4021/history",
+      "pay_to": "0x0000000000000000000000000000000000000001",
+      "equivalence_group": "history"
+    },
+    {
+      "service": "reputation",
+      "provider": "controlled",
+      "value": 2,
+      "endpoint": "http://127.0.0.1:4021/reputation",
+      "pay_to": "0x0000000000000000000000000000000000000001",
+      "equivalence_group": "reputation"
+    }
+  ]
+}

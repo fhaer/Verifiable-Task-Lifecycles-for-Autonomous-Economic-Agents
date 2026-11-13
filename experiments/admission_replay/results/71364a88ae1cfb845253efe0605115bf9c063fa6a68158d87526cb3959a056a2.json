@@ -1,0 +1,58 @@
+{
+  "actual_payments": false,
+  "after_first": {
+    "admission_replay": "pass",
+    "denied_transition": null,
+    "instance_id": "71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2",
+    "issues": [],
+    "recorded_policy_verified": true,
+    "settlement_check": "unverified",
+    "settlement_refs": [
+      "SIMULATED-NO-SETTLEMENT:71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2:0"
+    ],
+    "structural_consistency": "pass",
+    "transition_count": 1
+  },
+  "after_second": {
+    "admission_replay": "fail",
+    "denied_transition": 1,
+    "instance_id": "71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2",
+    "issues": [
+      "admission denied at transition 1: equivalent service already succeeded"
+    ],
+    "recorded_policy_verified": false,
+    "settlement_check": "unverified",
+    "settlement_refs": [
+      "SIMULATED-NO-SETTLEMENT:71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2:0",
+      "SIMULATED-NO-SETTLEMENT:71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2:1"
+    ],
+    "structural_consistency": "pass",
+    "transition_count": 2
+  },
+  "claim": "Simulated recorded history: structural pass, admission replay fail",
+  "instance_id": "0x71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2",
+  "intent_hash": "0x77bb954218c07c7bb242e18bb1a9a1ed4d293572ad68f19bf0adbfd3f1563a06",
+  "mode": "offline-simulated-ledger",
+  "model_hash": "0xc7bb597d4431af6c1149df1a977c74add737387646f47240abbe4c19862554e2",
+  "onchain_lifecycle_commitments": false,
+  "policy_hash": "0xf5afa3a3554873af9bc5a37900b8f6002cdd871489fa5db5a5c0a82dfa4c24a7",
+  "provider_attested": false,
+  "schema": "admission-replay-experiment/v1",
+  "settlement_check": "unverified",
+  "transitions": [
+    {
+      "action_hash": "0x7cec2837088b6513f81a94e46eb6c9225cb78a0d0ed064f014f149e9cb7d2cbf",
+      "evidence_hash": "0xd3353f40d6750086d0d71b7346763140699b87e26ca060546701fd2e3f2720af",
+      "payment_hash": "0x33c602dc0ca1d77b7d5a37461a0fc9850b1509ef0b2aa367c3bb6b5a01b4b7ea",
+      "service": "reputation",
+      "synthetic_settlement_reference": "SIMULATED-NO-SETTLEMENT:71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2:0"
+    },
+    {
+      "action_hash": "0x4301bca017cae990e502fd12802a06d543b41cc6f047c73c130b936416ea04f7",
+      "evidence_hash": "0x6e9d4efece34a50d84740885a1a01551a1fe94a7faf0161486e851bc1d3d2b12",
+      "payment_hash": "0x78f6a0f2f5165d6dcc1d405d22201cde01b1758d27c3b9c15b4dc6d0d5f3cf79",
+      "service": "reputation-alt",
+      "synthetic_settlement_reference": "SIMULATED-NO-SETTLEMENT:71364a88ae1cfb845253efe0605115bf9c063fa6a68158d87526cb3959a056a2:1"
+    }
+  ]
+}

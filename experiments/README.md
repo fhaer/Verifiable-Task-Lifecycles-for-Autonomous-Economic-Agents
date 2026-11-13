@@ -1,10 +1,15 @@
-# Experiments
+# Archived experiment evidence
 
-The experiment material is separated by evaluation purpose:
+These files preserve the observations used by the paper and its subsequent verifier/payment evaluations. Historical results and journals should not be overwritten.
 
-- `controlled_cases/` — lifecycle admission cases T1-T5 and integrity case T6;
-- `live_base_sepolia/` — five controlled end-to-end runs used for RQ3;
-- `independent_verification/` — separate two-transition verifier result used for RQ2;
-- `external_interop/` — separate run with an independently operated x402 service.
+| Directory | Purpose |
+|---|---|
+| `controlled_cases/` | T1–T6 admission and tampering cases |
+| `live_base_sepolia/` | Five controlled runs, eight paid transitions, 18 lifecycle transactions (RQ3 sample) |
+| `independent_verification/` | Original two-transition structural and receipt verification (historical RQ2) |
+| `external_interop/` | Historical independently operated x402 service interaction |
+| `admission_replay/` | Later **on-chain** admission-replay counterexample: structural pass, policy fail at transition 1; synthetic Payment/Evidence |
+| `live_x402/` | Separate real testnet x402 request and independently checked ERC-20 transfer |
+| `environment/` | Public environment and version information |
 
-The external-provider run is not part of the five-run performance sample. Archived files contain public testnet identifiers and no private credentials.
+For precise scientific claims and ABI provenance, see [Provenance](../docs/PROVENANCE.md) and [Claim-to-artifact map](../docs/CLAIM_ARTIFACT_MAP.md). For verification commands, see [Reproducibility](../docs/REPRODUCIBILITY.md).

@@ -1,0 +1,28 @@
+{
+  "intent": {
+    "goal": "Controlled test of redundant risk-analysis purchase policy",
+    "budget": 10,
+    "allowed_services": ["reputation", "reputation-alt"],
+    "allowed_providers": ["controlled-test"]
+  },
+  "catalog": [
+    {
+      "service": "reputation",
+      "provider": "controlled-test",
+      "value": 2,
+      "endpoint": "https://example.invalid/reputation",
+      "pay_to": "0x0000000000000000000000000000000000000001",
+      "equivalence_group": "reputation"
+    },
+    {
+      "service": "reputation-alt",
+      "provider": "controlled-test",
+      "value": 2,
+      "endpoint": "https://example.invalid/reputation-alt",
+      "pay_to": "0x0000000000000000000000000000000000000001",
+      "equivalence_group": "reputation"
+    }
+  ],
+  "first_service": "reputation",
+  "second_service": "reputation-alt"
+}

@@ -1,0 +1,13 @@
+{
+  "endpoint": "https://tollbooth-sanctions-screener-testnet.sjwilliams8.workers.dev/screen",
+  "method": "POST",
+  "json_body": {"name": "Banco Nacional de Cuba"},
+  "service": "sanctions-screen",
+  "provider": "external-sanctions-screener",
+  "catalog_value": 1,
+  "pay_to": "0xb3e7993ed2fc2c79fff220620240f298bba9bf5b",
+  "network": "eip155:84532",
+  "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+  "atomic_units_per_budget_unit": 10000,
+  "catalog_source": "https://x402.new/services/tollbooth-sanctions-screener-testnet-sjwilliams8-workers-dev-screen"
+}

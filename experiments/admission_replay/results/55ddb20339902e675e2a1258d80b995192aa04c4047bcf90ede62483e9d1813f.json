@@ -1,0 +1,38 @@
+{
+  "actual_payments": false,
+  "chain_id": 84532,
+  "contract": "0xE27e67da9D39aF51D778648E50EE2182C5B2D680",
+  "error": "TaskCreationError: transaction 0x2e382c00af0d884cf815587c9a91989101e54cbf4fa08663e7163bf89278ed35 confirmed; could not read back commitments",
+  "events": [
+    {
+      "event": "before_create",
+      "instance_id": "0x55ddb20339902e675e2a1258d80b995192aa04c4047bcf90ede62483e9d1813f"
+    }
+  ],
+  "instance_id": "0x55ddb20339902e675e2a1258d80b995192aa04c4047bcf90ede62483e9d1813f",
+  "intent_hash": "0x77bb954218c07c7bb242e18bb1a9a1ed4d293572ad68f19bf0adbfd3f1563a06",
+  "mode": "onchain-ledger-with-simulated-payments",
+  "model_hash": "0xc7bb597d4431af6c1149df1a977c74add737387646f47240abbe4c19862554e2",
+  "onchain_lifecycle_commitments": false,
+  "phase": "error-reconcile-before-retry",
+  "policy_hash": "0xf5afa3a3554873af9bc5a37900b8f6002cdd871489fa5db5a5c0a82dfa4c24a7",
+  "schema": "admission-replay-experiment-journal/v1",
+  "settlement_check": "unverified",
+  "transitions": [
+    {
+      "action_hash": "0x7cec2837088b6513f81a94e46eb6c9225cb78a0d0ed064f014f149e9cb7d2cbf",
+      "evidence_hash": "0x10e67d44294a9b067fbcbb93d79825a4191f331fa5f0d1f5d3c517ce7ae54eb6",
+      "payment_hash": "0x6c93c61c358253e432dc4fad49f7181fca6fabce16369c08b2c5c8f366c24501",
+      "service": "reputation",
+      "synthetic_settlement_reference": "SIMULATED-NO-SETTLEMENT:55ddb20339902e675e2a1258d80b995192aa04c4047bcf90ede62483e9d1813f:0"
+    },
+    {
+      "action_hash": "0x4301bca017cae990e502fd12802a06d543b41cc6f047c73c130b936416ea04f7",
+      "evidence_hash": "0x1b43ecf173a35dd2cdba5b80310b65bc15d106bb086f2733805b784c72e30c5d",
+      "payment_hash": "0xaf52853099a823c531f6fb729bc5e9e946f812e978b6f3860d9a5a3383d0da0f",
+      "service": "reputation-alt",
+      "synthetic_settlement_reference": "SIMULATED-NO-SETTLEMENT:55ddb20339902e675e2a1258d80b995192aa04c4047bcf90ede62483e9d1813f:1"
+    }
+  ],
+  "warning": "Synthetic settlement refs are NOT real payments. Inspect chain before retrying interrupted sends."
+}

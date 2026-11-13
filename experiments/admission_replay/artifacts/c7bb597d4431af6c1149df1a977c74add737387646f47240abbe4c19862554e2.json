@@ -1,0 +1,1 @@
+{"initial_state":"active","paid_transition":{"from":"active","to":"active"},"schema":"verifiable-task-lifecycle-model/v1","terminal_states":["completed","failed","revoked"]}
